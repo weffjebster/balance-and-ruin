@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Random file fragment copying from windows => wsl
+.Zone.identifier 

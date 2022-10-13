@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",   // eslint
+    "esbenp.prettier-vscode",   // prettier used for eslint behind the scenes
+    "bradlc.vscode-tailwindcss" //tailwind extension for autocomplete
+  ]
+}
