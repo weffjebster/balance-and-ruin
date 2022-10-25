@@ -8,7 +8,7 @@ type Props = {
 export default function Input({ label, name, onChange, placeholder, value }: Props) {
   return (
     <div>
-      <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+      <label htmlFor={`${name}-input`} className="block text-sm font-medium text-gray-700">
         {label}
       </label>
       <div className="mt-1">
