@@ -22,24 +22,25 @@ export const FlagRangeSlider = ({ id, label, ...rest }: Props) => {
   );
 
   return (
-    <Slider
-      label={label}
-      min={min}
-      max={max}
-      value={[40, 60]}
-      step={1}
-      // // name={id}
-      // // onChange={(val) => {
-      // //   console.log(val);
-      // //   setValue(`${val}`);
-      // // }}
-      // // range
-      // // value={parsed}
-      // allowCross={false}
-      // range
-      // defaultValue={[20, 40]}
-      // onChange={(val) => console.log(val)}
-      // {...rest}
-    />
+    <></>
+    // <Slider
+    //   label={label}
+    //   min={min}
+    //   max={max}
+    //   value={[40, 60]}
+    //   step={1}
+    //   // // name={id}
+    //   // // onChange={(val) => {
+    //   // //   console.log(val);
+    //   // //   setValue(`${val}`);
+    //   // // }}
+    //   // // range
+    //   // // value={parsed}
+    //   // allowCross={false}
+    //   // range
+    //   // defaultValue={[20, 40]}
+    //   // onChange={(val) => console.log(val)}
+    //   // {...rest}
+    // />
   );
 };

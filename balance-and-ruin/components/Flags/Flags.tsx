@@ -2,9 +2,7 @@ import { useMemo } from 'react';
 import Textarea from '~/components/Textarea';
 import { useFlagContext } from '~/utils/useFlagContext';
 
-type Props = {};
-
-export const Flags = ({}: Props) => {
+export const Flags = () => {
   const { flags } = useFlagContext();
   const flagValue = useMemo(() => {
     const endVal = Object.values(flags).join(' ');
