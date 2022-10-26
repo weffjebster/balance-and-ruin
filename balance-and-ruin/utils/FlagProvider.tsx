@@ -32,6 +32,7 @@ export type FlagProviderData = {
 
 export const FlagContext = React.createContext<FlagProviderData>({
   flags: {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setFlags: () => {},
   metadata: {}
 });

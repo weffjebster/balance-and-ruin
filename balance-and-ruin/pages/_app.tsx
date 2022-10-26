@@ -6,6 +6,7 @@ import '../styles/globals.css';
 
 const MyApp = ({ Component, pageProps }: AppLayoutProps) => {
   const [flags, setFlags] = useState<FlagProviderData['flags']>({});
+  
   return (
     <FlagProvider
       value={{

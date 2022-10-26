@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
@@ -10,7 +10,6 @@ export type SelectOption = {
   key: string;
   label: string;
   description: string;
-  current: boolean;
 };
 
 type Props = {
