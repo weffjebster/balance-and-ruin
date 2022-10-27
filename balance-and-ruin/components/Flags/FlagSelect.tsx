@@ -1,42 +1,50 @@
-import { useMemo } from 'react';
-import { useFlag, useFlagContext, useMetadata } from '~/utils/useFlagContext';
-import { useFlagSelect } from '~/utils/useFlagSelect';
+import { useFlag, useMetadata } from '~/utils/useFlagContext';
 import Select, { SelectOption } from '../Select';
+import startCase from 'lodash/startCase';
 
 type Props = {
-  mutuallyExclusiveGroup: string;
+  id: string;
   label: string;
+  /** if "nullable" default value will be null/empty, and the first selection will be "None" */
+  nullable?: boolean;
 };
 
-// /**
-//  *
-//  * @param key key of mutually exclusive group
-//  */
-// const useSelectOptions = (key: string) => {
-//   const { metadata } = useFlagContext();
-//   return useMemo(
-//     () =>
-//       Object.values(metadata)
-//         .filter((item) => item.mutually_exclusive_group === key)
-//         .map(
-//           (item) =>
-//             ({
-//               current: false,
-//               description: item.description,
-//               key: item.key,
-//               label: item.key
-//             } as SelectOption)
-//         ),
-//     [key, metadata]
-//   );
-// };
+const EMPTY_VALUE = 'none';
 
-export const FlagSelect = ({ mutuallyExclusiveGroup, label }: Props) => {
-  const { options, selected, setValue } = useFlagSelect(mutuallyExclusiveGroup);
+/**
+ * Used when a select should be selecting between multiple potential flags.
+ * Depending on the selected option, another input may be rendered below it
+ * @returns
+ */
+export const FlagSelect = ({ id, nullable = false, label }: Props) => {
+  const [flag, setFlagValue] = useFlag(id);
+  const [flagName, value] = flag.split(' ');
+  const metadata = useMetadata();
+  const meta = metadata[id];
+  const rawOptions = meta.allowed_values || [];
+
+  const options: SelectOption[] = rawOptions.map((opt) => ({
+    key: opt as string,
+    label: startCase(opt as string)
+  }));
+
+  if (nullable) {
+    options.unshift({
+      key: EMPTY_VALUE,
+      label: 'None'
+    })
+  }
+
+  const selected = options.find((z) => z.key === value) ?? options[0];
 
   return (
     <div>
-      <Select label={label} onChange={setValue} options={options} value={selected} />
+      <Select
+        label={label}
+        onChange={(elected) => setFlagValue(elected.key === EMPTY_VALUE ? null : elected.key)}
+        options={options}
+        value={selected}
+      />
     </div>
   );
 };

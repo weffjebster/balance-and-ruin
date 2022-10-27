@@ -9,7 +9,7 @@ function classNames(...classes: string[]) {
 export type SelectOption = {
   key: string;
   label: string;
-  description: string;
+  description?: string;
 };
 
 type Props = {

@@ -1,14 +1,13 @@
 import { NextPage } from 'next';
+import 'rc-slider/assets/index.css';
 import Card from '~/components/Card';
+import { FlagGroupSelect } from '~/components/Flags/FlagGroupSelect';
 import { FlagInput } from '~/components/Flags/FlagInput';
 import { FlagRangeSlider } from '~/components/Flags/FlagRangeSlider';
 import { Flags } from '~/components/Flags/Flags';
+import { FlagSelect } from '~/components/Flags/FlagSelect';
 import { FlagSlider } from '~/components/Flags/FlagSlider';
 import { FlagSwitch } from '~/components/Flags/FlagSwitch';
-
-import React from 'react';
-import 'rc-slider/assets/index.css';
-import { FlagSelect } from '~/components/Flags/FlagSelect';
 
 const Create: NextPage = () => {
   return (
@@ -16,10 +15,17 @@ const Create: NextPage = () => {
       <div className="p-4 mb-8 gap-2 flex flex-col">
         <Card title={'Settings'}>
           <FlagInput id="seed" label="Seed" />
-          <FlagSelect mutuallyExclusiveGroup="Game Mode" label="Mode" />
+          <FlagGroupSelect mutuallyExclusiveGroup="Game Mode" label="Mode" />
           <FlagSwitch id="spoiler_log" label="Spoiler Log" />
         </Card>
 
+        <Card title={'Starting Party'}>
+          <FlagSelect id="start_char1" label="Starting Character" />
+          <FlagSelect id="start_char2" label="Starting Character" nullable />
+          <FlagSelect id="start_char3" label="Starting Character" nullable />
+          <FlagSelect id="start_char4" label="Starting Character" nullable />
+        </Card>
+        
         <Card title={'Characters'}>
           <FlagSwitch id="start_average_level" label="Start Average Level" />
           <FlagSwitch id="start_naked" label="Start Naked" />

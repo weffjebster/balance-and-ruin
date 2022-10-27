@@ -13,6 +13,7 @@ export default function Input({ label, name, onChange, placeholder, value }: Pro
       </label>
       <div className="mt-1">
         <input
+          autoComplete="off"
           type="text"
           name={name}
           id={`${name}-input`}

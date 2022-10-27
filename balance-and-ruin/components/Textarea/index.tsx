@@ -3,8 +3,8 @@ type Props = {
   name: string;
   onChange?: (val: string) => void;
   value: string;
-};
-export default function Textarea({ label, name, onChange, value }: Props) {
+} & React.HTMLAttributes<HTMLTextAreaElement>;
+export default function Textarea({ label, name, onChange, value, ...rest }: Props) {
   return (
     <div>
       <label htmlFor="comment" className="block text-sm font-medium text-gray-700">
@@ -18,6 +18,7 @@ export default function Textarea({ label, name, onChange, value }: Props) {
           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           onChange={(e) => onChange?.(e.target.value)}
           value={value}
+          {...rest}
         />
       </div>
     </div>

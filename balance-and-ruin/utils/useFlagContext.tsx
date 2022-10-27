@@ -1,6 +1,7 @@
 import { useCallback, useContext, useMemo } from 'react';
 import { RawFlagMetadata } from '~/constants/flagMetadata';
 import { FlagContext } from './FlagProvider';
+import { flagsToData } from './flagsToData';
 
 export const useFlagContext = () => {
   const { flags, setFlags, metadata } = useContext(FlagContext);
@@ -12,9 +13,12 @@ export const useFlagContext = () => {
     }, {} as Record<string, RawFlagMetadata>);
   }, [metadata])
 
+  const setRawFlags = (rawFlags: string) => setFlags(flagsToData(rawFlags, metadata));
+
   return {
     flags,
     setFlags,
+    setRawFlags,
     metadata,
     metadataByFlag
   };
