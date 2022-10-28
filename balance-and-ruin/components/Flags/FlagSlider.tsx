@@ -1,9 +1,11 @@
 import { useMemo } from 'react';
 import { useFlag, useMetadata } from '~/utils/useFlagContext';
 import NumberInput from '../NumberInput';
-import Slider from '../Slider';
+import Slider from 'rc-slider';
 import first from 'lodash/first';
 import last from 'lodash/last';
+import { bindMinMax } from '~/utils/bindMinMax';
+import { getNumberSuffix } from '~/utils/getNumberSuffix';
 
 type Props = {
   id: string;
@@ -13,45 +15,44 @@ type Props = {
 export const FlagSlider = ({ id, label }: Props) => {
   const metadata = useMetadata()[id];
 
-  const [rawValue, setRawValue] = useFlag(id);
-  const [flag, value] = rawValue.split(' ');
-
-  const defaultValue = useMemo(() => (metadata.default as number) ?? 0, [metadata.default]);
-
-  const allowedValues = metadata.allowed_values;
-  const min = (metadata.options?.min_val as number) ?? first(allowedValues) ?? defaultValue;
-  const max = (metadata.options?.max_val as number) ?? last(allowedValues) ?? defaultValue;
-  let step = 0.5;
-  if ((Number.isInteger(min) && Number.isInteger(max)) || allowedValues?.every(Number.isInteger)) {
-    step = 1;
+  if (!metadata) {
+    throw new Error(`Flag with id ${id} not found`);
   }
 
-  const onChange = (val: string) => {
-    const parsed = Number.parseInt(val);
-    setRawValue((parsed < min ? min : parsed > max ? max : parsed).toString());
+  const [rawFlag, setRawValue] = useFlag(id);
+  const [flag, rawValue] = rawFlag.split(' ');
+
+  const allowedValues = metadata.allowed_values;
+
+  const defaultValue = useMemo(
+    () => (metadata.default as number) ?? first(allowedValues) ?? 0,
+    [allowedValues, metadata.default]
+  );
+
+  const min = (metadata.options?.min_val as number) ?? first(allowedValues) ?? defaultValue;
+  const max = (metadata.options?.max_val as number) ?? last(allowedValues) ?? defaultValue;
+
+  const value = bindMinMax(Number.parseFloat(rawValue ?? defaultValue), min, max);
+
+  let step = 1;
+
+  /** BIG HACK */
+  if (metadata.type === 'float') {
+    step = 0.5;
+  }
+
+  const onChange = (value: number) => {
+    setRawValue(value.toString());
   };
 
   return (
     <div>
-      <Slider
-        label={label}
-        name={id}
-        min={min}
-        max={max}
-        onChange={(val) => setRawValue(`${val}`)}
-        step={step}
-        value={Number.isFinite(Number.parseInt(value)) ? Number.parseInt(value) : min}
-      />
-      <NumberInput
-        label=""
-        name={`${id}-input`}
-        onChange={(val) => setRawValue(val)}
-        onBlur={onChange}
-        min={min}
-        max={max}
-        step={step}
-        value={value || min.toString()}
-      />
+      {label && (
+        <label htmlFor={`${id}-input`} className="block text-sm font-medium text-gray-700">
+          {label} ({value}){getNumberSuffix(id, metadata.type)}
+        </label>
+      )}
+      <Slider min={min} max={max} onChange={(val) => onChange(val as number)} step={step} value={value} />
     </div>
   );
 };

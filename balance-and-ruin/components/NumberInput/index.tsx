@@ -4,26 +4,28 @@ type Props = {
   disabled?: boolean;
   name: string;
   label: string;
-  onBlur?: (val: string) => void;
-  onChange?: (val: string) => void;
+  onBlur?: (val: number) => void;
+  onChange?: (val: number) => void;
   placeholder?: string;
-  value: string | null;
+  value: number | undefined;
 
   min?: number;
   max?: number;
   step?: number;
 };
-export default function NumberInput(props: Props) {
-  const { max, min, value, ...rest } = props;
 
-  console.log(min, max);
+export default function NumberInput(props: Props) {
+  const { max, min, onChange, onBlur, value, ...rest } = props;
+
   return (
     <Input
-      {...rest}
-      min={min?.toString()}
-      max={max?.toString()}
-      value={value?.toString() ?? ''}
+      min={min}
+      max={max}
+      onBlur={(val) => onBlur?.(Number.parseInt(val))}
+      onChange={(val) => onChange?.(Number.parseInt(val))}
       type="number"
+      value={value}
+      {...rest}
     />
   );
 }

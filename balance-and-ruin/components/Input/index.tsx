@@ -6,7 +6,7 @@ type Props = {
   onBlur?: (val: string) => void;
   onChange?: (val: string) => void;
   placeholder?: string;
-} & Partial<Pick<HTMLInputElement, 'min' | 'max' | 'type' | 'value'>>;
+} & Omit<Partial<React.HTMLProps<HTMLInputElement>>, 'onChange' | 'onBlur'>;
 export default function Input({ label, name, onBlur, onChange, placeholder, value, ...rest }: Props) {
   return (
     <div>

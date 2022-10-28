@@ -12,7 +12,7 @@ import { FlagSwitch } from '~/components/Flags/FlagSwitch';
 const Create: NextPage = () => {
   return (
     <div className="mb-4">
-      <dl className="p-4 mb-8 gap-2 grid grid-cols-1 xl:grid-cols-2">
+      <dl className="p-4 mb-8 gap-2 grid grid-cols-1 md:grid-cols-2">
         <Card title={'Settings'} className="border-blue-200">
           <FlagInput id="seed" label="Seed" />
           <FlagGroupSelect mutuallyExclusiveGroup="Game Mode" label="Mode" />
@@ -42,7 +42,6 @@ const Create: NextPage = () => {
       <Card title="" className="border-gray-500">
         <Flags />
       </Card>
-      <FlagSlider id="level_scaling_ced" label="Max Scale Level" />
     </div>
   );
 };

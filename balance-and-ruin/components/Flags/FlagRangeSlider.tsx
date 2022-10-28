@@ -1,7 +1,12 @@
 import { useMemo } from 'react';
 import { useFlag, useMetadata } from '~/utils/useFlagContext';
-import Slider, { SliderProps } from '../Slider';
+import Slider, { SliderProps } from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import NumberInput from '../NumberInput';
+import first from 'lodash/first';
+import last from 'lodash/last';
+import { bindMinMax } from '~/utils/bindMinMax';
+import { getNumberSuffix } from '~/utils/getNumberSuffix';
 
 type Props = {
   id: string;
@@ -10,33 +15,43 @@ type Props = {
 
 export const FlagRangeSlider = ({ id, label, ...rest }: Props) => {
   const metadata = useMetadata()[id];
+  const [rawFlag, setRawValue] = useFlag(id);
+  const [flag, rawMinVal, rawMaxVal] = rawFlag.split(' ');
 
-  const min = metadata.options?.min_val as number;
-  const max = metadata.options?.max_val as number;
-  const [rawValue, setRawValue] = useFlag(id);
-  const [flag, minVal, maxVal] = rawValue.split(' ');
+  const allowedValues = metadata.allowed_values;
 
-  const defaultValue = useMemo(() => (metadata.default as number[]) ?? [0, 0], [metadata.default]);
+  const defaultValue = useMemo(
+    () => (metadata.default as number) ?? first(allowedValues) ?? 0,
+    [allowedValues, metadata.default]
+  );
 
-  const parsed = useMemo(() => {
-    const min = Number.isFinite(Number.parseInt(minVal)) ? Number.parseInt(minVal) : defaultValue[0];
-    const max = Number.isFinite(Number.parseInt(maxVal)) ? Number.parseInt(maxVal) : defaultValue[1];
-    return [min, max];
-  }, [minVal, defaultValue, maxVal]);
+  const minBound = (metadata.options?.min_val as number) ?? first(allowedValues) ?? defaultValue;
+  const maxBound = (metadata.options?.max_val as number) ?? last(allowedValues) ?? defaultValue;
 
+  const value = [rawMinVal, rawMaxVal].map((val) =>
+    bindMinMax(Number.parseFloat(val ?? defaultValue), minBound, maxBound)
+  );
+
+  const [minValue, maxValue] = value;
   return (
-    <Slider
-      label={label}
-      max={max}
-      min={min}
-      name={label ?? id}
-      onChange={(newVal) => {
-        const [min, max] = newVal as number[];
-        setRawValue(`${min} ${max}`);
-      }}
-      range
-      step={1}
-      value={parsed}
-    />
+    <div>
+      {label && (
+        <label htmlFor={`${id}-input`} className="block text-sm font-medium text-gray-700">
+          {label} ({minValue}-{maxValue}){getNumberSuffix(id, metadata.type)}
+        </label>
+      )}
+
+      <Slider
+        max={maxBound}
+        min={minBound}
+        onChange={(newVal) => {
+          const [newMin, newMax] = newVal as number[];
+          setRawValue(`${newMin} ${newMax}`);
+        }}
+        range
+        step={1}
+        value={value}
+      />
+    </div>
   );
 };

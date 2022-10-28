@@ -3,7 +3,7 @@ type Props = {
   name: string;
   onChange?: (val: string) => void;
   value: string;
-} & React.HTMLAttributes<HTMLTextAreaElement>;
+} & React.HTMLProps<HTMLTextAreaElement>;
 export default function Textarea({ label, name, onChange, value, ...rest }: Props) {
   return (
     <div>
