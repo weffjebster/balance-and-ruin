@@ -6,6 +6,12 @@ import { useFlagContext } from './useFlagContext';
 
 export const EMPTY_SELECT_VALUE = 'none';
 
+const INVALID_SELECT = {
+  key: 'N/A',
+  label: 'INVALID SELECT',
+  description: 'an error occurred while creating the select'
+};
+
 export const useFlagGroupSelect = (mutuallyExclusiveGroup: string, nullable = false) => {
   const { flags, metadata, metadataByFlag, setFlags } = useFlagContext();
 

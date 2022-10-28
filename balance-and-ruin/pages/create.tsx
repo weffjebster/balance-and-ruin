@@ -38,6 +38,14 @@ const Create: NextPage = () => {
           <FlagGroupSelect mutuallyExclusiveGroup="Ability Scaling" label="Ability Scaling" nullable />
           <FlagSlider id="max_scale_level" label="Max Scale Level" />
         </Card>
+
+        <Card title={'Coliseum'} className="border-red-600">
+          <FlagGroupSelect mutuallyExclusiveGroup="Coliseum Opponents" label="Opponents" nullable />
+          <FlagGroupSelect mutuallyExclusiveGroup="Coliseum Rewards" label="Rewards" nullable />
+          <FlagSwitch id="coliseum_rewards_menu" label="Rewards Menu" />
+          <FlagSwitch id="coliseum_no_exp_eggs" label="No Exp. Eggs" />
+          <FlagSwitch id="coliseum_no_illuminas" label="No Illuminas" />
+        </Card>
       </dl>
       <Card title="" className="border-gray-500">
         <Flags />

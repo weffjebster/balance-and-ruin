@@ -1,6 +1,6 @@
 import { getNumberSuffix } from '~/utils/getNumberSuffix';
 import { useFlag, useMetadata } from '~/utils/useFlagContext';
-import { EMPTY_SELECT_VALUE, useFlagGroupSelect } from '~/utils/useFlagGroupSelect';
+import { useFlagGroupSelect } from '~/utils/useFlagGroupSelect';
 import Select from '../Select';
 import { SmartFlagInput } from './SmartFlagInput';
 
@@ -22,11 +22,6 @@ function getFormattedLabelValue(val1: string, val2: string, suffix: string) {
   return '';
 }
 
-const INVALID_SELECT = {
-  key: 'N/A',
-  label: 'INVALID SELECT',
-  description: 'an error occurred while creating the select'
-};
 /**
  * Used when a select should be selecting between multiple potential flags.
  * Depending on the selected option, another input may be rendered below it
@@ -45,7 +40,7 @@ export const FlagGroupSelect = ({ label: baseLabel, mutuallyExclusiveGroup, null
 
   return (
     <div className="grid gap-y-2">
-      <Select label={label} onChange={setValue} options={options} value={selected || INVALID_SELECT} />
+      <Select label={label} onChange={setValue} options={options} value={selected || options[0]} />
       {selected && <SmartFlagInput id={selectedKey} />}
     </div>
   );
