@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Switch as BaseSwitch } from '@headlessui/react';
 
 function classNames(...classes: string[]) {

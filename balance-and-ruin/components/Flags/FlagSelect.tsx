@@ -1,6 +1,7 @@
 import { useFlag, useMetadata } from '~/utils/useFlagContext';
 import Select, { SelectOption } from '../Select';
 import startCase from 'lodash/startCase';
+import { EMPTY_SELECT_VALUE } from '~/utils/useFlagGroupSelect';
 
 type Props = {
   id: string;
@@ -8,8 +9,6 @@ type Props = {
   /** if "nullable" default value will be null/empty, and the first selection will be "None" */
   nullable?: boolean;
 };
-
-const EMPTY_VALUE = 'none';
 
 /**
  * Used when a select should be selecting between multiple potential flags.
@@ -30,9 +29,9 @@ export const FlagSelect = ({ id, nullable = false, label }: Props) => {
 
   if (nullable) {
     options.unshift({
-      key: EMPTY_VALUE,
+      key: EMPTY_SELECT_VALUE,
       label: 'None'
-    })
+    });
   }
 
   const selected = options.find((z) => z.key === value) ?? options[0];
@@ -41,7 +40,7 @@ export const FlagSelect = ({ id, nullable = false, label }: Props) => {
     <div>
       <Select
         label={label}
-        onChange={(elected) => setFlagValue(elected.key === EMPTY_VALUE ? null : elected.key)}
+        onChange={(elected) => setFlagValue(elected.key === EMPTY_SELECT_VALUE ? null : elected.key)}
         options={options}
         value={selected}
       />

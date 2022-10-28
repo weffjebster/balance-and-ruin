@@ -1,15 +1,15 @@
 import { renderHook } from '@testing-library/react';
 import { FlagContext } from './FlagProvider';
-import { useFlagSelect } from './useFlagSelect';
+import { useFlagGroupSelect } from './useFlagGroupSelect';
 import metadata from '../pages/api/flag-metadata.json';
 
-describe(useFlagSelect, () => {
+describe(useFlagGroupSelect, () => {
   it('properly calls underlying setFlags ', () => {
     expect(true).toBe(true);
     const flags = {};
     const setFlags = jest.fn();
 
-    const { result } = renderHook(() => useFlagSelect('Game Mode'), {
+    const { result } = renderHook(() => useFlagGroupSelect('Game Mode'), {
       wrapper: ({ children }) => (
         <FlagContext.Provider value={{ setFlags, flags, metadata }}>{children}</FlagContext.Provider>
       )

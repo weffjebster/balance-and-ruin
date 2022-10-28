@@ -1,12 +1,23 @@
-import { RawFlagMetadata } from '~/constants/flagMetadata';
-import { useFlag } from '~/utils/useFlagContext';
-import Input from '../Input';
+import { useMetadata } from '~/utils/useFlagContext';
+import { EMPTY_SELECT_VALUE } from '~/utils/useFlagGroupSelect';
+import { FlagRangeSlider } from './FlagRangeSlider';
+import { FlagSlider } from './FlagSlider';
 
 type Props = {
-  metadata: RawFlagMetadata;
+  id: string;
 };
 
-export const SmartFlagInput = ({ metadata }: Props) => {
+export const SmartFlagInput = ({ id }: Props) => {
+  const metadata = useMetadata();
+  const flagMetadata = metadata[id];
+
+  if (id === EMPTY_SELECT_VALUE) {
+    return null;
+  }
+  if (!flagMetadata) {
+    throw new Error(`No metadata for flag with key ${id}`);
+  }
+
   const {
     description,
     flag,
@@ -16,9 +27,22 @@ export const SmartFlagInput = ({ metadata }: Props) => {
     allowed_values,
     args,
     default: defaultValue,
-    mutually_exclusive_group,
     nargs,
     options
-  } = metadata;
+  } = flagMetadata;
+
+  // boolean typed from a select just mean "apply this flag as-is"
+  if (type === 'bool') {
+    return null;
+  }
+
+  if (options?.min_val || options?.max_val) {
+    return <FlagRangeSlider id={id} />;
+  }
+
+  if (type === 'int' || type === 'float') {
+    return <FlagSlider id={id} />;
+  }
+
   return null;
 };

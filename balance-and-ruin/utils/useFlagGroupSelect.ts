@@ -1,9 +1,12 @@
+import startCase from 'lodash/startCase';
 import { useMemo } from 'react';
 import { SelectOption } from '~/components/Select';
 import { useFlagContext } from './useFlagContext';
 
-export const useFlagSelect = (mutuallyExclusiveGroup: string) => {
-  const {flags, metadata, metadataByFlag, setFlags} = useFlagContext();
+export const EMPTY_SELECT_VALUE = 'none';
+
+export const useFlagGroupSelect = (mutuallyExclusiveGroup: string, nullable = false) => {
+  const { flags, metadata, metadataByFlag, setFlags } = useFlagContext();
 
   /** All flags that use this mutually_exclusive_group */
   const rawOptions = useMemo(
@@ -17,18 +20,28 @@ export const useFlagSelect = (mutuallyExclusiveGroup: string) => {
 
   const setValue = (option: SelectOption) => {
     const node = metadata[option.key];
-    const defaultvalue = node.default ?? '';
-    setFlags({...flags, [mutuallyExclusiveGroup]: `${node.flag} ${defaultvalue}`.trim() })
+    const defaultvalue = node?.default ?? '';
+    setFlags({
+      ...flags,
+      [mutuallyExclusiveGroup]: option.key === EMPTY_SELECT_VALUE ? '' : `${node.flag} ${defaultvalue}`.trim()
+    });
   };
 
   const options: SelectOption[] = rawOptions.map((opt) => ({
     description: opt.description,
     key: opt.key,
-    label: opt.key
+    label: startCase(opt.key)
   }));
 
+  if (nullable) {
+    options.unshift({
+      key: EMPTY_SELECT_VALUE,
+      label: 'None'
+    });
+  }
+
   const [selectedFlag] = flags[mutuallyExclusiveGroup]?.split(' ') || [];
-  const selected = options.find(options => metadataByFlag[selectedFlag]?.key === options.key) ?? options[0];
+  const selected = options.find((options) => metadataByFlag[selectedFlag]?.key === options.key) ?? options[0];
 
   return {
     options,
