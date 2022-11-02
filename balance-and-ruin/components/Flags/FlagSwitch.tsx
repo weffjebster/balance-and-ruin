@@ -4,11 +4,23 @@ import Switch from '../Switch';
 
 type Props = {
   id: string;
+  /** When true, do inverse logic. Flag being off will apply it */
+  invert?: boolean;
   label: string;
 };
 
-export const FlagSwitch = ({ id, label }: Props) => {
+export const FlagSwitch = ({ id, invert, label }: Props) => {
   const [flag, setFlag] = useFlag(id);
 
-  return <Switch checked={!!flag} label={label} onChange={(checked) => setFlag(checked ? '' : null)} />;
+  const checked = invert ? !flag : !!flag;
+
+  const onChange = (checked: boolean) => {
+    if (invert) {
+      setFlag(checked ? null : '');
+    } else {
+      setFlag(checked ? '' : null);
+    }
+  };
+
+  return <Switch checked={checked} label={label} onChange={onChange} />;
 };

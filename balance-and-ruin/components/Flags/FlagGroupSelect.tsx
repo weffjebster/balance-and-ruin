@@ -6,8 +6,13 @@ import { SmartFlagInput } from './SmartFlagInput';
 
 type Props = {
   label: string;
-  mutuallyExclusiveGroup: string;
+  /** used to automatically search the metadata and find list of available options. Set to null if manually setting options */
+  mutuallyExclusiveGroup: string | null;
   nullable?: boolean;
+  /** The option name for the null/none value */
+  nullableLabel?: string;
+  /** list of flag IDs to show options for.  */
+  options?: string[];
 };
 
 function getFormattedLabelValue(val1: string, val2: string, suffix: string) {
@@ -27,8 +32,19 @@ function getFormattedLabelValue(val1: string, val2: string, suffix: string) {
  * Depending on the selected option, another input may be rendered below it
  * @returns
  */
-export const FlagGroupSelect = ({ label: baseLabel, mutuallyExclusiveGroup, nullable = false }: Props) => {
-  const { options, selected, setValue } = useFlagGroupSelect(mutuallyExclusiveGroup, nullable);
+export const FlagGroupSelect = ({
+  label: baseLabel,
+  mutuallyExclusiveGroup,
+  nullable = false,
+  nullableLabel = 'None',
+  options: optionOverrides
+}: Props) => {
+  const { options, selected, setValue } = useFlagGroupSelect({
+    mutuallyExclusiveGroup,
+    nullable,
+    nullableLabel,
+    optionOverrides
+  });
   let label = baseLabel;
   const selectedKey = selected?.key || '';
   const selectedMetadata = useMetadata()[selectedKey];

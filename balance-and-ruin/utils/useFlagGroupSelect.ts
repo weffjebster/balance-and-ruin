@@ -6,20 +6,27 @@ import { useFlagContext } from './useFlagContext';
 
 export const EMPTY_SELECT_VALUE = 'none';
 
-const INVALID_SELECT = {
-  key: 'N/A',
-  label: 'INVALID SELECT',
-  description: 'an error occurred while creating the select'
+type UseFlagSelectProps = {
+  mutuallyExclusiveGroup: string | null;
+  nullable?: boolean;
+  nullableLabel?: string;
+  optionOverrides?: string[];
 };
-
-export const useFlagGroupSelect = (mutuallyExclusiveGroup: string, nullable = false) => {
-  const { flags, metadata, metadataByFlag, setFlags } = useFlagContext();
+export const useFlagGroupSelect = ({
+  mutuallyExclusiveGroup,
+  nullable,
+  nullableLabel,
+  optionOverrides
+}: UseFlagSelectProps) => {
+  const { flags, metadata, setFlags } = useFlagContext();
 
   /** All flags that use this mutually_exclusive_group */
-  const rawOptions = useMemo(
-    () => Object.values(metadata).filter((z) => z.mutually_exclusive_group === mutuallyExclusiveGroup),
-    [metadata, mutuallyExclusiveGroup]
-  );
+  const rawOptions = useMemo(() => {
+    if (optionOverrides) {
+      return optionOverrides.map((option) => metadata[option]);
+    }
+    return Object.values(metadata).filter((z) => z.mutually_exclusive_group === mutuallyExclusiveGroup);
+  }, [metadata, mutuallyExclusiveGroup, optionOverrides]);
 
   if (!rawOptions.length) {
     throw new Error(`No options exist for group ${mutuallyExclusiveGroup}`);
@@ -53,7 +60,7 @@ export const useFlagGroupSelect = (mutuallyExclusiveGroup: string, nullable = fa
   if (nullable) {
     options.unshift({
       key: EMPTY_SELECT_VALUE,
-      label: 'None'
+      label: nullableLabel || 'None'
     });
   }
 

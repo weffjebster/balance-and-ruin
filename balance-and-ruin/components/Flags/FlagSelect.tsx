@@ -22,10 +22,12 @@ export const FlagSelect = ({ id, nullable = false, label }: Props) => {
   const meta = metadata[id];
   const rawOptions = meta.allowed_values || [];
 
-  const options: SelectOption[] = rawOptions.map((opt) => ({
-    key: opt as string,
-    label: startCase(opt as string)
-  }));
+  const options: SelectOption[] = rawOptions
+    .filter((z) => !!z)
+    .map((opt) => ({
+      key: opt as string,
+      label: startCase(opt as string)
+    }));
 
   if (nullable) {
     options.unshift({

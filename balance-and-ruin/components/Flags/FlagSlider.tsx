@@ -45,11 +45,12 @@ export const FlagSlider = ({ id, label }: Props) => {
     setRawValue(value.toString());
   };
 
+  console.log(id, metadata.args);
   return (
     <div>
       {label && (
         <label htmlFor={`${id}-input`} className="block text-sm font-medium text-gray-700">
-          {label} ({value}){getNumberSuffix(id, metadata.type)}
+          {label} ({value}){getNumberSuffix(id, metadata.args || '')}
         </label>
       )}
       <Slider min={min} max={max} onChange={(val) => onChange(val as number)} step={step} value={value} />
