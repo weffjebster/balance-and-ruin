@@ -36,7 +36,7 @@ export const SmartFlagInput = ({ id }: Props) => {
     return null;
   }
 
-  if (options?.min_val || options?.max_val) {
+  if (nargs && nargs > 1 && (options?.min_val || options?.max_val)) {
     return <FlagRangeSlider id={id} />;
   }
 
