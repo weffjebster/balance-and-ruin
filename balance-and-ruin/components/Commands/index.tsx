@@ -98,9 +98,9 @@ const Commands = () => {
 
   return (
     <>
-      {commands.map(({ label, value }) => {
-        return <Select label={''} onChange={onChange} options={options} />;
-      })}
+      {/* {commands.map(({ label, value }) => {
+        return <Select key={label} label={''} onChange={() => {}} options={options} value={null} />;
+      })} */}
     </>
   );
 };

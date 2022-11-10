@@ -13,7 +13,6 @@
     "@headlessui/react": "1.7.3",
     "@heroicons/react": "2.0.12",
     "@next/font": "13.0.2",
-    "@reduxjs/toolkit": "1.9.0",
     "@welldone-software/why-did-you-render": "7.0.1",
     "lodash": "4.17.21",
     "next": "13.0.2",
