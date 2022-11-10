@@ -15,7 +15,7 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "~/*": ["./*"] // import { SomeComponent } from '~/components/SomeComponent';
+      "~/*": ["./*"] 
     }
   },
   "include": ["next-env.d.ts", "next.d.ts", "**/*.ts", "**/*.tsx"],
