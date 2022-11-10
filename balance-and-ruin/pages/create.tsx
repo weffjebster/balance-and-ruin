@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import 'rc-slider/assets/index.css';
+import { memo } from 'react';
 import Card from '~/components/Card';
 import { FlagGroupSelect } from '~/components/Flags/FlagGroupSelect';
 import { FlagInput } from '~/components/Flags/FlagInput';
@@ -8,37 +9,45 @@ import { Flags } from '~/components/Flags/Flags';
 import { FlagSelect } from '~/components/Flags/FlagSelect';
 import { FlagSlider } from '~/components/Flags/FlagSlider';
 import { FlagSwitch } from '~/components/Flags/FlagSwitch';
+import { cinzel } from '~/utils/fonts';
 
 const Create: NextPage = () => {
   return (
-    <div className="mb-4">
-      <dl className="p-4 mb-8 gap-2 grid grid-cols-1 md:grid-cols-2">
-        <Card title={'Settings'} className="border-blue-200">
+    <div className="p-8 mb-4 mx-auto flex flex-col ">
+      <header className="flex justify-center">
+        <div
+          className={`py-8 px-8 my-8 border-big-text border-4 text-center w-auto inline-block shrink ${cinzel.className}`}
+        >
+          <h1 className={'text-3xl text-big-text font-bold'}>FF6 Worlds Collide</h1>
+        </div>
+      </header>
+      <dl className="flex justify-evenly flex-wrap gap-1">
+        <Card title={'Settings'}>
           <FlagInput id="seed" label="Seed" />
           <FlagGroupSelect mutuallyExclusiveGroup="Game Mode" label="Mode" />
           <FlagSwitch id="spoiler_log" label="Spoiler Log" />
         </Card>
-        <Card title={'Starting Party'} className="border-blue-300">
+        <Card title={'Starting Party'}>
           <FlagSelect id="start_char1" label="Starting Character 1" />
           <FlagSelect id="start_char2" label="Starting Character 2" nullable />
           <FlagSelect id="start_char3" label="Starting Character 3" nullable />
           <FlagSelect id="start_char4" label="Starting Character 4" nullable />
         </Card>
-        <Card title={'Characters'} className="border-blue-400">
+        <Card title={'Characters'}>
           <FlagSwitch id="start_average_level" label="Start Average Level" />
           <FlagSwitch id="start_naked" label="Start Naked" />
           <FlagSwitch id="equipable_umaro" label="Equipable Umaro" />
           <FlagRangeSlider id="character_stat_random_percent" label="Character Stats" />
         </Card>
-        <Card title={'SwdTech'} className="border-red-600">
+        <Card title={'SwdTech'}>
           <FlagSwitch id="fast_swdtech" label="Fast SwdTech" />
           <FlagSwitch id="swdtechs_everyone_learns" label="Everyone Learns" />
         </Card>
-        <Card title={'Blitz'} className="border-red-600">
+        <Card title={'Blitz'}>
           <FlagSwitch id="bum_rush_last" label="Bum Rush Last" />
           <FlagSwitch id="blitzes_everyone_learns" label="Everyone Learns" />
         </Card>
-        <Card title={'Lore'} className="border-red-600">
+        <Card title={'Lore'}>
           <FlagGroupSelect
             mutuallyExclusiveGroup={null}
             label="Starting Lores"
@@ -55,7 +64,7 @@ const Create: NextPage = () => {
           />
           <FlagSwitch id="lores_everyone_learns" label="Everyone Learns" />
         </Card>
-        <Card title={'Rage'} className="border-red-600">
+        <Card title={'Rage'}>
           <FlagGroupSelect
             mutuallyExclusiveGroup={null}
             label="Start Rages"
@@ -67,7 +76,7 @@ const Create: NextPage = () => {
           <FlagSwitch id="rages_no_leap" label="No Leap" />
           <FlagSwitch id="rages_no_charm" label="No Charm" />
         </Card>
-        <Card title={'Dance'} className="border-red-600">
+        <Card title={'Dance'}>
           <FlagRangeSlider id="start_dances_random" label="Start Dances" />
 
           <FlagSwitch id="dances_shuffle" label="Shuffle Abilities" />
@@ -75,13 +84,13 @@ const Create: NextPage = () => {
           <FlagSwitch id="dances_no_stumble" label="Enable Stumble" invert />
           <FlagSwitch id="dances_everyone_learns" label="Everyone Learns" />
         </Card>
-        <Card title={'Experience, Magic Points, Gold'} className="border-red-600">
+        <Card title={'Experience, Magic Points, Gold'}>
           <FlagInput id="xp_mult" label="Experience Multiplier" type="number" />
           <FlagInput id="mp_mult" label="Magic Point Multiplier" type="number" />
           <FlagInput id="gp_mult" label="Gold Multiplier" type="number" />
           <FlagSwitch id="no_exp_party_divide" label="Split Party Exp" invert />
         </Card>
-        <Card title={'Bosses'} className="border-red-600">
+        <Card title={'Bosses'}>
           <FlagGroupSelect
             mutuallyExclusiveGroup={'Boss Battles'}
             label="Boss Battles"
@@ -95,20 +104,20 @@ const Create: NextPage = () => {
           <FlagSwitch id="boss_experience" label="Boss Experience" />
           <FlagSwitch id="boss_no_undead" label="Bosses Can Be Undead" invert />
         </Card>
-        <Card title={'Boss AI'} className="border-red-600">
+        <Card title={'Boss AI'}>
           <FlagSwitch id="doom_gaze_no_escape" label="Doom Gaze Escapes" invert />
           <FlagSwitch id="wrexsoul_no_zinger" label="Wrex Soul Zingers" invert />
           <FlagSwitch id="magimaster_no_ultima" label="MagiMaster Ultima on Death" invert />
           <FlagSwitch id="chadarnook_more_demon" label="Chadarnook More Demon" />
         </Card>
-        <Card title={'Scaling'} className="border-red-600">
+        <Card title={'Scaling'}>
           <FlagGroupSelect mutuallyExclusiveGroup="Level Scaling" label="Level Scaling" nullable />
           <FlagGroupSelect mutuallyExclusiveGroup="HP/MP Scaling" label="HP/MP Scaling" nullable />
           <FlagGroupSelect mutuallyExclusiveGroup="XP/GP Scaling" label="XP/GP Scaling" nullable />
           <FlagGroupSelect mutuallyExclusiveGroup="Ability Scaling" label="Ability Scaling" nullable />
           <FlagSlider id="max_scale_level" label="Max Scale Level" />
         </Card>
-        <Card title={'Encounters'} className="border-red-600">
+        <Card title={'Encounters'}>
           <FlagGroupSelect
             mutuallyExclusiveGroup="Random Encounters"
             label="Random Encounters"
@@ -128,7 +137,7 @@ const Create: NextPage = () => {
             nullableLabel="Original"
           />
         </Card>
-        <Card title={'Espers'} className="border-red-600">
+        <Card title={'Espers'}>
           <FlagGroupSelect
             mutuallyExclusiveGroup={'Esper Spells'}
             label="Spells"
@@ -155,7 +164,7 @@ const Create: NextPage = () => {
           <FlagSwitch id="esper_multi_summon" label="Multi Summon" />
         </Card>
 
-        <Card title={'Natural Magic'} className="border-red-600">
+        <Card title={'Natural Magic'}>
           <FlagSelect id="natural_magic1" label="Natural Magic" nullable />
           <FlagSwitch id="random_natural_levels1" label="Randomize Levels" />
           <FlagSwitch id="random_natural_spells1" label="Randomize Spells" />
@@ -167,9 +176,14 @@ const Create: NextPage = () => {
           <FlagSwitch id="natural_magic_menu_indicator" label="Menu Indicator" />
         </Card>
       </dl>
-      <Card title="" className="border-gray-500">
-        <Flags />
-      </Card>
+
+      {/* <div className={'flex justify-center'} style={{ maxWidth: '20rem' }}>
+        <div className="flex-grow">
+          <Card title="Flags" className="flex-grow">
+            <Flags />
+          </Card>
+        </div>
+      </div> */}
     </div>
   );
 };

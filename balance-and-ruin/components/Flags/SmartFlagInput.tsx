@@ -1,4 +1,4 @@
-import { useMetadata } from '~/utils/useFlagContext';
+import { useFlagMetadata } from '~/utils/useFlagContext';
 import { EMPTY_SELECT_VALUE } from '~/utils/useFlagGroupSelect';
 import { FlagRangeSlider } from './FlagRangeSlider';
 import { FlagSlider } from './FlagSlider';
@@ -8,13 +8,12 @@ type Props = {
 };
 
 export const SmartFlagInput = ({ id }: Props) => {
-  const metadata = useMetadata();
-  const flagMetadata = metadata[id];
+  const metadata = useFlagMetadata(id);
 
   if (id === EMPTY_SELECT_VALUE) {
     return null;
   }
-  if (!flagMetadata) {
+  if (!metadata) {
     throw new Error(`No metadata for flag with key ${id}`);
   }
 
@@ -29,7 +28,7 @@ export const SmartFlagInput = ({ id }: Props) => {
     default: defaultValue,
     nargs,
     options
-  } = flagMetadata;
+  } = metadata;
 
   // boolean typed from a select just mean "apply this flag as-is"
   if (type === 'bool') {

@@ -11,7 +11,9 @@ describe(useFlagGroupSelect, () => {
 
     const { result } = renderHook(() => useFlagGroupSelect('Game Mode'), {
       wrapper: ({ children }) => (
-        <FlagContext.Provider value={{ setFlags, flags, metadata }}>{children}</FlagContext.Provider>
+        <FlagContext.Provider value={{ setFlags, defaultFlags: flags, metadata }}>
+          {children}
+        </FlagContext.Provider>
       )
     });
     const { options } = result.current;
@@ -21,6 +23,6 @@ describe(useFlagGroupSelect, () => {
 
     result.current.setValue(options[1]);
     expect(setFlags).toHaveBeenCalledTimes(2);
-    expect(setFlags).toHaveBeenCalledWith({'Game Mode': '-cg'});
+    expect(setFlags).toHaveBeenCalledWith({ 'Game Mode': '-cg' });
   });
 });

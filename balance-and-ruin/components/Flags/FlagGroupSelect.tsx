@@ -1,5 +1,5 @@
 import { getNumberSuffix } from '~/utils/getNumberSuffix';
-import { useFlag, useMetadata } from '~/utils/useFlagContext';
+import { useFlag, useFlagMetadata } from '~/utils/useFlagContext';
 import { useFlagGroupSelect } from '~/utils/useFlagGroupSelect';
 import Select from '../Select';
 import { SmartFlagInput } from './SmartFlagInput';
@@ -47,9 +47,9 @@ export const FlagGroupSelect = ({
   });
   let label = baseLabel;
   const selectedKey = selected?.key || '';
-  const selectedMetadata = useMetadata()[selectedKey];
+  const selectedMetadata = useFlagMetadata(selectedKey);
 
-  const [rawFlag = ''] = useFlag(selectedKey);
+  const [rawFlag = ''] = useFlag(selectedKey.toString());
   const [flag, val1 = '', val2 = ''] = rawFlag.split(' ');
 
   label += getFormattedLabelValue(val1, val2, getNumberSuffix(selectedKey, selectedMetadata?.type || ''));
@@ -57,7 +57,7 @@ export const FlagGroupSelect = ({
   return (
     <div className="grid gap-y-2">
       <Select label={label} onChange={setValue} options={options} value={selected || options[0]} />
-      {selected && <SmartFlagInput id={selectedKey} />}
+      {selected && <SmartFlagInput id={selectedKey.toString()} />}
     </div>
   );
 };

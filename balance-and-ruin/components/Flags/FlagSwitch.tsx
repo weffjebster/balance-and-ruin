@@ -12,7 +12,9 @@ type Props = {
 export const FlagSwitch = ({ id, invert, label }: Props) => {
   const [flag, setFlag] = useFlag(id);
 
-  const checked = invert ? !flag : !!flag;
+  const isChecked = flag !== '' ? true : false;
+
+  const checked = invert ? !isChecked : isChecked;
 
   const onChange = (checked: boolean) => {
     if (invert) {
@@ -24,3 +26,5 @@ export const FlagSwitch = ({ id, invert, label }: Props) => {
 
   return <Switch checked={checked} label={label} onChange={onChange} />;
 };
+
+FlagSwitch.whyDidYouRender = true;

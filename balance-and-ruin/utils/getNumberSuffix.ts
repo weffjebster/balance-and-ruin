@@ -1,5 +1,5 @@
-export const getNumberSuffix = (id: string, type: string | string[]) => {
-  if (id.includes('percent') || type == 'PERCENT') {
+export const getNumberSuffix = (id: string | number, type: string | string[]) => {
+  if ((typeof id === 'string' && id.includes('percent')) || type == 'PERCENT') {
     return '%';
   }
 

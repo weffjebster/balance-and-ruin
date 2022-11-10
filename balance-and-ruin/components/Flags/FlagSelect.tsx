@@ -1,7 +1,8 @@
-import { useFlag, useMetadata } from '~/utils/useFlagContext';
+import { useFlag, useFlagMetadata } from '~/utils/useFlagContext';
 import Select, { SelectOption } from '../Select';
 import startCase from 'lodash/startCase';
 import { EMPTY_SELECT_VALUE } from '~/utils/useFlagGroupSelect';
+import { useEffect } from 'react';
 
 type Props = {
   id: string;
@@ -18,9 +19,8 @@ type Props = {
 export const FlagSelect = ({ id, nullable = false, label }: Props) => {
   const [flag, setFlagValue] = useFlag(id);
   const [flagName, value] = flag.split(' ');
-  const metadata = useMetadata();
-  const meta = metadata[id];
-  const rawOptions = meta.allowed_values || [];
+  const metadata = useFlagMetadata(id);
+  const rawOptions = metadata.allowed_values || [];
 
   const options: SelectOption[] = rawOptions
     .filter((z) => !!z)

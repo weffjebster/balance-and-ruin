@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 
@@ -19,7 +19,7 @@ type Props = {
   value: SelectOption;
 };
 
-export default function Select({ label, onChange, options, value }: Props) {
+function _Select({ label, onChange, options, value }: Props) {
   return (
     <div>
       <Listbox value={value} onChange={onChange}>
@@ -79,3 +79,6 @@ export default function Select({ label, onChange, options, value }: Props) {
     </div>
   );
 }
+
+export const Select = _Select;
+export default Select;

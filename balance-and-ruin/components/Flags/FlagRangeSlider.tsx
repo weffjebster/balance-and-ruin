@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
-import { useFlag, useMetadata } from '~/utils/useFlagContext';
+import { useFlag, useFlagMetadata } from '~/utils/useFlagContext';
 import Slider, { SliderProps } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import NumberInput from '../NumberInput';
 import first from 'lodash/first';
 import last from 'lodash/last';
 import { bindMinMax } from '~/utils/bindMinMax';
@@ -14,7 +13,7 @@ type Props = {
 } & Partial<SliderProps>;
 
 export const FlagRangeSlider = ({ id, label, ...rest }: Props) => {
-  const metadata = useMetadata()[id];
+  const metadata = useFlagMetadata(id);
   const [rawFlag, setRawValue] = useFlag(id);
   const [flag, rawMinVal, rawMaxVal] = rawFlag.split(' ');
 

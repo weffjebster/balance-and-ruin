@@ -25,15 +25,12 @@ export type FlagValues = Record<string, FlagValue>;
 
 /** Data inside of the context provider */
 export type FlagProviderData = {
-  flags: FlagValues;
-  setFlags: (data: FlagValues) => void;
+  defaultFlags: FlagValues;
   metadata: Record<string, RawFlagMetadata>;
 };
 
 export const FlagContext = React.createContext<FlagProviderData>({
-  flags: {},
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setFlags: () => {},
+  defaultFlags: {},
   metadata: {}
 });
 

@@ -11,7 +11,9 @@ describe(`wow`, () => {
 
     const { result } = renderHook(() => useFlagContext(), {
       wrapper: ({ children }) => (
-        <FlagContext.Provider value={{ setFlags, flags, metadata }}>{children}</FlagContext.Provider>
+        <FlagContext.Provider value={{ setFlags, defaultFlags: flags, metadata }}>
+          {children}
+        </FlagContext.Provider>
       )
     });
 
@@ -19,6 +21,6 @@ describe(`wow`, () => {
       foo: 'isup'
     });
 
-    expect(setFlags).toHaveBeenCalledWith({'foo': 'isup'});
+    expect(setFlags).toHaveBeenCalledWith({ foo: 'isup' });
   });
 });

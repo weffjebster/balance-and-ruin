@@ -32,7 +32,7 @@ export default function Switch({ checked, disabled = false, label, onChange }: P
         />
       </BaseSwitch>
       <BaseSwitch.Label as="span" className="ml-3">
-        <span className="text-sm font-medium text-gray-900">{label}</span>
+        <span className="text-sm font-medium text-gray-900 hover:cursor-pointer">{label}</span>
       </BaseSwitch.Label>
     </BaseSwitch.Group>
   );

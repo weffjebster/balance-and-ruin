@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { useFlag, useMetadata } from '~/utils/useFlagContext';
-import NumberInput from '../NumberInput';
+import { useFlag, useFlagMetadata } from '~/utils/useFlagContext';
 import Slider from 'rc-slider';
 import first from 'lodash/first';
 import last from 'lodash/last';
@@ -13,7 +12,7 @@ type Props = {
 };
 
 export const FlagSlider = ({ id, label }: Props) => {
-  const metadata = useMetadata()[id];
+  const metadata = useFlagMetadata(id);
 
   if (!metadata) {
     throw new Error(`Flag with id ${id} not found`);
@@ -45,7 +44,6 @@ export const FlagSlider = ({ id, label }: Props) => {
     setRawValue(value.toString());
   };
 
-  console.log(id, metadata.args);
   return (
     <div>
       {label && (
