@@ -1,7 +1,6 @@
 import { AppLayoutProps } from 'next/app';
 import { FlagProvider } from '~/utils/FlagProvider';
 import { flagsToData } from '~/utils/flagsToData';
-import { montserrat } from '~/utils/fonts';
 import metadata from '../pages/api/flag-metadata.json';
 
 import '../styles/globals.css';
@@ -13,7 +12,7 @@ const DEFAULT_FLAGS =
 const defaultFlags = flagsToData(DEFAULT_FLAGS, metadata);
 const MyApp = ({ Component, pageProps }: AppLayoutProps) => {
   return (
-    <main className={`${montserrat.className}`}>
+    <main>
       <FlagProvider
         value={{
           defaultFlags,

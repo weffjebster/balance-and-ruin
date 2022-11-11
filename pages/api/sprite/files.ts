@@ -2,15 +2,20 @@ import { NextApiHandler } from 'next';
 import { PythonShell } from 'python-shell';
 import path from 'path';
 
-export const getSprite = async (spriteId: string, paletteId: string, pose = 1) => {
-  const directory = path.join(process.cwd(), 'WorldsCollide');
-  const script = path.resolve(directory, 'graphics/tools/print_sprite.py');
+type Response = {
+  palettes: Record<number, string>;
+  sprites: Record<number, string>;
+};
 
-  return new Promise<number[]>((resolve, reject) => {
+export const getSpriteFiles = async () => {
+  const directory = path.join(process.cwd(), 'WorldsCollide');
+  const script = path.resolve(directory, 'graphics/tools/print_sprites_and_palettes.py');
+
+  return new Promise<Response>((resolve, reject) => {
     const py = PythonShell.run(
       script,
       {
-        args: [spriteId, paletteId, pose.toString()],
+        args: [],
         mode: 'json'
       },
       function (err) {
@@ -24,8 +29,7 @@ export const getSprite = async (spriteId: string, paletteId: string, pose = 1) =
   });
 };
 const handler: NextApiHandler = async (req, res) => {
-  const { spriteId, paletteId } = req.query as Record<string, string>;
-  const data = await getSprite(spriteId, paletteId);
+  const data = await getSpriteFiles();
   res.send({ data });
 };
 
