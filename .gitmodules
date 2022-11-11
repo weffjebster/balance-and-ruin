@@ -1,0 +1,4 @@
+[submodule "WorldsCollide"]
+	path = WorldsCollide
+	url = https://github.com/kielbasiago/WorldsCollide
+	branch = flag-metadata
