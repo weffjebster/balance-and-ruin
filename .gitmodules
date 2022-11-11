@@ -1,4 +1,0 @@
-[submodule "balance-and-ruin/WorldsCollide"]
-	path = balance-and-ruin/WorldsCollide
-	url = https://github.com/kielbasiago/WorldsCollide.git
-	branch = flag-metadata
