@@ -13,6 +13,8 @@ specifiers:
   '@typescript-eslint/parser': 5.40.0
   '@welldone-software/why-did-you-render': 7.0.1
   autoprefixer: 10.4.13
+  class-variance-authority: 0.3.0
+  cva: npm:class-variance-authority@0.3.0
   eslint: 8.25.0
   eslint-config-next: 13.0.2
   eslint-config-prettier: 8.5.0
@@ -56,6 +58,8 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.40.0_25sstg4uu2sk4pm7xcyzuov7xq
   '@typescript-eslint/parser': 5.40.0_z4bbprzjrhnsfa24uvmcbu7f5q
   autoprefixer: 10.4.13_postcss@8.4.18
+  class-variance-authority: 0.3.0_typescript@4.8.4
+  cva: /class-variance-authority/0.3.0_typescript@4.8.4
   eslint: 8.25.0
   eslint-config-next: 13.0.2_z4bbprzjrhnsfa24uvmcbu7f5q
   eslint-config-prettier: 8.5.0_eslint@8.25.0
@@ -713,6 +717,17 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.2
+
+  /class-variance-authority/0.3.0_typescript@4.8.4:
+    resolution: {integrity: sha512-TFO+pzY9Gedqv8crPhprd647wxhvfpKevPPjiMcteEWsnkHX9yZrD1xMY3ZhRZnLwHUHCCP0LYO6KZIVag/5wQ==}
+    peerDependencies:
+      typescript: '>= 4.5.5 < 5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 4.8.4
+    dev: true
 
   /classnames/2.3.2:
     resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
